@@ -21,6 +21,7 @@ public class Venda {
 	private Long id;
 	private String produto;
 	private String marca;
+	private Float valor;
 	
 	
 	
