@@ -3,10 +3,12 @@ package br.abraao.pa;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.time.LocalDate;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
@@ -19,7 +21,6 @@ import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
 import ar.com.fdvs.dj.domain.builders.GroupBuilder;
 import ar.com.fdvs.dj.domain.constants.Border;
 import ar.com.fdvs.dj.domain.constants.Font;
-import ar.com.fdvs.dj.domain.constants.GroupLayout;
 import ar.com.fdvs.dj.domain.constants.HorizontalAlign;
 import ar.com.fdvs.dj.domain.constants.Transparency;
 import ar.com.fdvs.dj.domain.constants.VerticalAlign;
@@ -44,16 +45,15 @@ public class DynamicjasperApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("====================");
+		System.out.println("======================");
 		
 	
 		VendaRepository vendaRepository = new VendaRepository();
- 		Style detailStyle = new Style("detail");
-
+		
 		Style headerStyle = new Style("header");
 		headerStyle.setFont(Font.ARIAL_MEDIUM_BOLD);
-		headerStyle.setBorderBottom(Border.PEN_1_POINT());
-		headerStyle.setBackgroundColor(Color.gray);
+		headerStyle.setBorderBottom(Border.PEN_2_POINT());
+		headerStyle.setBackgroundColor(Color.DARK_GRAY);
 		headerStyle.setTextColor(Color.white);
 		headerStyle.setHorizontalAlign(HorizontalAlign.CENTER);
 		headerStyle.setVerticalAlign(VerticalAlign.MIDDLE);
@@ -68,74 +68,94 @@ public class DynamicjasperApplication implements CommandLineRunner {
 		
 		Style groupVariables = new Style("groupVariables");
 		groupVariables.setFont(Font.ARIAL_MEDIUM_BOLD);
-		groupVariables.setTextColor(Color.BLUE);
-		groupVariables.setBorderBottom(Border.THIN());
-		groupVariables.setHorizontalAlign(HorizontalAlign.RIGHT);
-		groupVariables.setVerticalAlign(VerticalAlign.BOTTOM);
+		groupVariables.setHorizontalAlign(HorizontalAlign.CENTER);
+		groupVariables.isOverridesExistingStyle();
+		
+		
+		
+		headerVariables.setStretchWithOverflow(true);
+		Style detailStyle = new Style("detail");		
+		Style subtitleStyle = new Style();
+		Style amountStyle = new Style(); amountStyle.setHorizontalAlign(HorizontalAlign.RIGHT);
 		
 		Style titleStyle = new Style("titleStyle");
 		titleStyle.setFont(new Font(18, Font._FONT_VERDANA, true));
+		
 		Style importeStyle = new Style();
-		importeStyle.setHorizontalAlign(HorizontalAlign.RIGHT);
+		importeStyle.setHorizontalAlign(HorizontalAlign.CENTER);
+		
 		Style oddRowStyle = new Style();
-		oddRowStyle.setBorder(Border.NO_BORDER());
+		oddRowStyle.setBorder(Border.NO_BORDER()); 
 		oddRowStyle.setBackgroundColor(Color.LIGHT_GRAY);
 		oddRowStyle.setTransparency(Transparency.OPAQUE);
 		
 		DynamicReportBuilder drb = new DynamicReportBuilder();
 		Integer margin = new Integer(20);
-		drb
-			.setTitleStyle(titleStyle)
-			.setTitle("November sales report")					//defines the title of the report
-			.setSubtitle("The items in this report correspond "
-					+"to the main products: DVDs, Books, Foods and Magazines")
-			.setDetailHeight(new Integer(15)).setLeftMargin(margin)
-			.setRightMargin(margin).setTopMargin(margin).setBottomMargin(margin)
-			.setPrintBackgroundOnOddRows(true)
-			.setGrandTotalLegend("Grand Total")
-			.setGrandTotalLegendStyle(headerVariables)
-			.setOddRowBackgroundStyle(oddRowStyle);
+		drb.setTitleStyle(titleStyle)
+		.setTitle("Outubro " + LocalDate.now())					
+		.setSubtitle("Lista de Produtos")
+		.setDetailHeight(15)
+		.setLeftMargin(margin)
+		.setRightMargin(margin)
+		.setTopMargin(margin)
+		.setBottomMargin(margin)					
+		.setDefaultStyles(titleStyle, subtitleStyle, headerStyle, detailStyle)
+		.setColumnsPerPage(1)
+		.setOddRowBackgroundStyle(oddRowStyle);
+			
 		
 		
 		AbstractColumn colunaProduto = ColumnBuilder.getNew()
 				.setColumnProperty("produto", String.class.getName())
-				.setTitle("Produto").setWidth(new Integer(85)).setStyle(
-						detailStyle).setHeaderStyle(headerStyle).build();
+				.setTitle("Produto")
+				.setWidth(new Integer(85))
+				.setStyle(importeStyle)
+				.setHeaderStyle(headerStyle)
+				.build();
 		
 		AbstractColumn colunaItem = ColumnBuilder.getNew()
-				.setColumnProperty("item", String.class.getName()).setTitle(
-						"Item").setWidth(new Integer(85)).setStyle(detailStyle)
-				.setHeaderStyle(headerStyle).build();
+				.setColumnProperty("item", String.class.getName()).setTitle("Item")
+				.setWidth(new Integer(85))
+				.setStyle(importeStyle)
+				.setHeaderStyle(headerStyle)
+				.build();
 		
 		AbstractColumn colunaCode = ColumnBuilder.getNew()
-				.setColumnProperty("id", Long.class.getName()).setTitle("ID")
-				.setWidth(new Integer(40)).setStyle(importeStyle)
-				.setHeaderStyle(headerStyle).build();
-		
+				.setColumnProperty("id", Long.class.getName())
+				.setTitle("ID")
+				.setWidth(new Integer(40))
+				.setStyle(importeStyle)
+				.setHeaderStyle(headerStyle)
+				.build();
 		AbstractColumn colunaValor = ColumnBuilder.getNew()
-				.setColumnProperty("valor", Float.class.getName()).setTitle(
-						"Valor").setWidth(new Integer(100))
-				.setPattern("$ 0.00").setStyle(importeStyle).setHeaderStyle(
-						headerStyle).build();
-		
-		drb.addGlobalHeaderVariable(colunaValor, DJCalculation.SUM,headerVariables);
-		drb.addGlobalFooterVariable(colunaItem, DJCalculation.SUM,headerVariables);
-		
+				.setColumnProperty("valor", Float.class.getName()).setTitle("Valor")
+				.setWidth(new Integer(100))
+				.setPattern("$ 0.00")
+				.setStyle(importeStyle)
+				.setHeaderStyle(headerStyle)
+				.build();
+	
+	
+		drb.addGlobalHeaderVariable(colunaValor, DJCalculation.SUM,groupVariables);
+		//drb.addGlobalHeaderVariable(colunaValor, DJCalculation.SUM,headerVariables);
+		//drb.addGlobalHeaderVariable(colunaItem, DJCalculation.SUM,headerVariables);
 		drb.setGlobalHeaderVariableHeight(new Integer(25));
-		drb.setGlobalFooterVariableHeight(new Integer(25));
+		drb.setGlobalFooterVariableHeight(new Integer(100));
 		
 		GroupBuilder gb1 = new GroupBuilder();
 		
-		DJGroup g1 = gb1.setCriteriaColumn((PropertyColumn) colunaProduto)
+		DJGroup g1 = gb1.setCriteriaColumn((PropertyColumn) colunaValor)
 				.addFooterVariable(colunaValor,DJCalculation.SUM,groupVariables)
-				.addHeaderVariable(colunaValor,DJCalculation.SUM,groupVariables)
-				.setGroupLayout(GroupLayout.VALUE_IN_HEADER) 
-				.setFooterVariablesHeight(new Integer(20))
+				//.addHeaderVariable(colunaItem,DJCalculation.SUM,groupVariables)
+				//.addHeaderVariable(colunaValor,DJCalculation.SUM,groupVariables)
+				//.addHeaderVariable(colunaItem,DJCalculation.SUM,groupVariables)
+				//.setGroupLayout(GroupLayout.VALUE_IN_HEADER)
 				.setFooterHeight(new Integer(50),true)
+				.setFooterVariablesHeight(new Integer(20))
 				.setHeaderVariablesHeight(new Integer(35))
 				.build();
-		/*
-		GroupBuilder gb2 = new GroupBuilder(); // Create another group (using another column as criteria)
+		
+		/*GroupBuilder gb2 = new GroupBuilder(); // Create another group (using another column as criteria)
 		DJGroup g2 = gb2.setCriteriaColumn((PropertyColumn) columnaProduto) // and we add the same operations for the columnAmount and
 		.addFooterVariable(columnValor,
 		DJCalculation.SUM) // columnaQuantity columns
@@ -148,9 +168,10 @@ public class DynamicjasperApplication implements CommandLineRunner {
 		drb.addColumn(colunaCode);
 		drb.addColumn(colunaValor);
 		
-		drb.addGroup(g1); // add group g1
+		//drb.addGroup(g1); // add group g1
 		//drb.addGroup(g2);
 		
+		//drb.setPrintColumnNames (true);
 		drb.setUseFullPageWidth(true);
 		drb.addAutoText(AutoText.AUTOTEXT_PAGE_X_SLASH_Y, AutoText.POSITION_FOOTER, AutoText.ALIGNMENT_RIGHT);
 		
