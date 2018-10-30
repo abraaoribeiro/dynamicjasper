@@ -20,10 +20,8 @@ public class Venda {
 	@Id
 	private Long id;
 	private String produto;
-	private String marca;
+	private String item;
 	private Float valor;
 	
 	
-	
-
 }
