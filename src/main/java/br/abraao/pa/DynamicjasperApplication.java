@@ -1,52 +1,19 @@
 package br.abraao.pa;
 
-import java.awt.Color;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.time.LocalDate;
-
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import ar.com.fdvs.dj.core.DynamicJasperHelper;
-import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
-import ar.com.fdvs.dj.domain.AutoText;
-import ar.com.fdvs.dj.domain.DJCalculation;
-import ar.com.fdvs.dj.domain.DynamicReport;
-import ar.com.fdvs.dj.domain.Style;
-import ar.com.fdvs.dj.domain.builders.ColumnBuilder;
-import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder;
-import ar.com.fdvs.dj.domain.builders.GroupBuilder;
-import ar.com.fdvs.dj.domain.constants.Border;
-import ar.com.fdvs.dj.domain.constants.Font;
-import ar.com.fdvs.dj.domain.constants.HorizontalAlign;
-import ar.com.fdvs.dj.domain.constants.Transparency;
-import ar.com.fdvs.dj.domain.constants.VerticalAlign;
-import ar.com.fdvs.dj.domain.entities.DJGroup;
-import ar.com.fdvs.dj.domain.entities.columns.AbstractColumn;
-import ar.com.fdvs.dj.domain.entities.columns.PropertyColumn;
-import br.abraao.pa.repository.VendaRepository;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.export.OutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-
 @SpringBootApplication
-public class DynamicjasperApplication implements CommandLineRunner {
+public class DynamicjasperApplication  {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DynamicjasperApplication.class, args);
 	}
 
-	@Override
+	/*@Override
 	public void run(String... args) throws Exception {
 		System.out.println("======================");
 		
-	
 		VendaRepository vendaRepository = new VendaRepository();
 		
 		Style headerStyle = new Style("header");
@@ -155,13 +122,13 @@ public class DynamicjasperApplication implements CommandLineRunner {
 				.setHeaderVariablesHeight(new Integer(35))
 				.build();
 		
-		/*GroupBuilder gb2 = new GroupBuilder(); // Create another group (using another column as criteria)
+		GroupBuilder gb2 = new GroupBuilder(); // Create another group (using another column as criteria)
 		DJGroup g2 = gb2.setCriteriaColumn((PropertyColumn) columnaProduto) // and we add the same operations for the columnAmount and
 		.addFooterVariable(columnValor,
 		DJCalculation.SUM) // columnaQuantity columns
 		.addFooterVariable(columnValor,	DJCalculation.SUM)
 		.build();
-		*/
+		
 		
 		drb.addColumn(colunaProduto);
 		drb.addColumn(colunaItem);
@@ -193,5 +160,5 @@ public class DynamicjasperApplication implements CommandLineRunner {
 		exporter.exportReport();
 
 	}
-
+	 */
 }

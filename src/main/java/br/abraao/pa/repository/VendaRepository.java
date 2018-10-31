@@ -3,11 +3,16 @@ package br.abraao.pa.repository;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import br.abraao.pa.domain.Venda;
 
-public class VendaRepository {
 
-	public List<Venda> findAll() {
+@Repository
+public interface VendaRepository extends JpaRepository<Venda, Long>  {
+
+	/*public List<Venda> findAll() {
 
 		Venda venda1 = new Venda(1L, "Arroz", "Fazenda",10.00F);
 		Venda venda2 = new Venda(2L, "Feijão", "Booll",5.00F);
@@ -20,6 +25,6 @@ public class VendaRepository {
 		List<Venda> vendas = Arrays.asList(venda1, venda2, venda3, venda4, venda5, venda6, venda7);
 
 		return vendas;
-
 	}
+	 */
 }
