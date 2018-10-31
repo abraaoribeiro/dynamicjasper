@@ -9,7 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 import ar.com.fdvs.dj.core.DynamicJasperHelper;
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager;
 import ar.com.fdvs.dj.domain.AutoText;
@@ -61,19 +60,20 @@ public class DynamicjasperApplication implements CommandLineRunner {
 		
 		Style headerVariables = new Style("headerVariables");
 		headerVariables.setFont(Font.ARIAL_BIG_BOLD);
-		headerVariables.setBorderBottom(Border.THIN());
+		//headerVariables.setBorderBottom(Border.THIN());
 		headerVariables.setHorizontalAlign(HorizontalAlign.RIGHT);
-		headerVariables.setVerticalAlign(VerticalAlign.TOP);
+		headerVariables.setVerticalAlign(VerticalAlign.MIDDLE);
 		headerVariables.setStretchWithOverflow(true);
 		
 		Style groupVariables = new Style("groupVariables");
 		groupVariables.setFont(Font.ARIAL_MEDIUM_BOLD);
 		groupVariables.setHorizontalAlign(HorizontalAlign.CENTER);
 		groupVariables.isOverridesExistingStyle();
+		groupVariables.setVerticalAlign(VerticalAlign.MIDDLE);
+		groupVariables.getPaddingBottom();
 		
+	
 		
-		
-		headerVariables.setStretchWithOverflow(true);
 		Style detailStyle = new Style("detail");		
 		Style subtitleStyle = new Style();
 		Style amountStyle = new Style(); amountStyle.setHorizontalAlign(HorizontalAlign.RIGHT);
@@ -92,14 +92,14 @@ public class DynamicjasperApplication implements CommandLineRunner {
 		DynamicReportBuilder drb = new DynamicReportBuilder();
 		Integer margin = new Integer(20);
 		drb.setTitleStyle(titleStyle)
-		.setTitle("Outubro " + LocalDate.now())					
+		.setTitle("Data " + LocalDate.now())					
 		.setSubtitle("Lista de Produtos")
 		.setDetailHeight(15)
 		.setLeftMargin(margin)
 		.setRightMargin(margin)
 		.setTopMargin(margin)
 		.setBottomMargin(margin)					
-		.setDefaultStyles(titleStyle, subtitleStyle, headerStyle, detailStyle)
+		.setDefaultStyles(titleStyle, null, headerStyle, detailStyle)
 		.setColumnsPerPage(1)
 		.setOddRowBackgroundStyle(oddRowStyle);
 			
@@ -136,11 +136,10 @@ public class DynamicjasperApplication implements CommandLineRunner {
 				.build();
 	
 	
-		drb.addGlobalHeaderVariable(colunaValor, DJCalculation.SUM,groupVariables);
-		//drb.addGlobalHeaderVariable(colunaValor, DJCalculation.SUM,headerVariables);
-		//drb.addGlobalHeaderVariable(colunaItem, DJCalculation.SUM,headerVariables);
-		drb.setGlobalHeaderVariableHeight(new Integer(25));
-		drb.setGlobalFooterVariableHeight(new Integer(100));
+		drb.addGlobalFooterVariable(colunaValor, DJCalculation.SUM,groupVariables).setGrandTotalLegend("Total:");
+		drb.addGlobalFooterVariable(colunaCode, DJCalculation.SUM,groupVariables);
+		//drb.setGlobalHeaderVariableHeight(new Integer(25));
+		//drb.setGlobalFooterVariableHeight(new Integer(100));
 		
 		GroupBuilder gb1 = new GroupBuilder();
 		
@@ -150,6 +149,7 @@ public class DynamicjasperApplication implements CommandLineRunner {
 				//.addHeaderVariable(colunaValor,DJCalculation.SUM,groupVariables)
 				//.addHeaderVariable(colunaItem,DJCalculation.SUM,groupVariables)
 				//.setGroupLayout(GroupLayout.VALUE_IN_HEADER)
+				//.setGroupLayout(GroupLayout.DEFAULT_WITH_HEADER)
 				.setFooterHeight(new Integer(50),true)
 				.setFooterVariablesHeight(new Integer(20))
 				.setHeaderVariablesHeight(new Integer(35))
@@ -171,7 +171,7 @@ public class DynamicjasperApplication implements CommandLineRunner {
 		//drb.addGroup(g1); // add group g1
 		//drb.addGroup(g2);
 		
-		//drb.setPrintColumnNames (true);
+		//drb.setPrintColumnNames (false);
 		drb.setUseFullPageWidth(true);
 		drb.addAutoText(AutoText.AUTOTEXT_PAGE_X_SLASH_Y, AutoText.POSITION_FOOTER, AutoText.ALIGNMENT_RIGHT);
 		
