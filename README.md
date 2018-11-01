@@ -1,5 +1,5 @@
-## Teste da Biblioteca DynamicJasper
+## Teste Api DynamicJasper
 
-**O relatório é gerado na pasta target**
+DynamicJasper é um gerador de relatário que ajuda os desenvolvedores a economizar tempo ao projetar relatórios de complexidade simples ou média gerando o layout dos elementos do relatório automaticamente.
 
 
