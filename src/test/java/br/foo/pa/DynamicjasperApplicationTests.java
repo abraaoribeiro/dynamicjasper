@@ -1,4 +1,4 @@
-package br.ju.tre_pa;
+package br.foo.pa;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

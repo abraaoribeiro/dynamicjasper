@@ -1,4 +1,4 @@
-package br.abraao.pa.rest;
+package br.foo.pa.rest;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.abraao.pa.domain.Venda;
-import br.abraao.pa.report.VendaReport;
-import br.abraao.pa.repository.VendaRepository;
-import br.abraao.pa.service.ServiceReport;
+import br.foo.pa.domain.Venda;
+import br.foo.pa.report.VendaReport;
+import br.foo.pa.repository.VendaRepository;
+import br.foo.pa.service.ServiceReport;
 import net.sf.jasperreports.engine.JRException;
 
 @RestController

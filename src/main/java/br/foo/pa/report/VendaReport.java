@@ -1,4 +1,4 @@
-package br.abraao.pa.report;
+package br.foo.pa.report;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import ar.com.fdvs.dj.domain.constants.HorizontalAlign;
 import ar.com.fdvs.dj.domain.constants.Transparency;
 import ar.com.fdvs.dj.domain.constants.VerticalAlign;
 import ar.com.fdvs.dj.domain.entities.columns.AbstractColumn;
-import br.abraao.pa.domain.Venda;
+import br.foo.pa.domain.Venda;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;

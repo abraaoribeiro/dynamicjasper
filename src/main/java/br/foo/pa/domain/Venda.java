@@ -1,4 +1,4 @@
-package br.abraao.pa.domain;
+package br.foo.pa.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

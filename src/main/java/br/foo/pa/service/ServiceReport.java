@@ -1,4 +1,4 @@
-package br.abraao.pa.service;
+package br.foo.pa.service;
 
 import org.springframework.stereotype.Service;
 
